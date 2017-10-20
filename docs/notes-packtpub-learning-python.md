@@ -39,8 +39,8 @@ Use command `py -m venv <DIRECTORY>` - example
 ```
 D:
 cd \data\github\gmacario\learning-python
-py -m venv lpenv
-lpenv\Scripts\activate.bat
+py -m venv .lpenv
+.lpenv\Scripts\activate.bat
 ```
 
 Result:
