@@ -1,4 +1,4 @@
-# scopes2.py
+# lpbook/ch1/scopes2.py
 # Local versus Global
 # Reference: w_pacb43.pdf, page 28
 

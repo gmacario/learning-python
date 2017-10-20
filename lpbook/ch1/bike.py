@@ -1,4 +1,4 @@
-# bike.py
+# lpbook/ch1/bike.py
 # Reference: w_pacb43.pdf, page 31
 
 # let's define the class Bike

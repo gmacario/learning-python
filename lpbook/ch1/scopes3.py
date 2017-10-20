@@ -1,4 +1,4 @@
-# scopes3.py
+# lpbook/ch1/scopes3.py
 # Local, Enclosing and Global
 # Reference: w_pacb43.pdf, page 29
 

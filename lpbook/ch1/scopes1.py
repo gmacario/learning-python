@@ -1,4 +1,4 @@
-# scopes1
+# lpbook/ch1/scopes1
 # Local versus Global
 # Reference: w_pacb43.pdf, page 28
 
