@@ -12,6 +12,7 @@
 
 # TODO
 
+* [ ] Read `My_E-Books\PacktPub-Learning_Python_(2015-12)`
 * [ ] Replay `Misc\Webinars\20170519-Doulos-Python_in_One_Hour`
 * [ ] Check <https://automatetheboringstuff.com/>
 * [ ] Check The Hitchhiker's Guide to Python: <http://docs.python-guide.org/en/latest/>
