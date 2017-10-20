@@ -32,6 +32,47 @@ C:\Users\gmacario\AppData\Local\Programs\Python\Python36
 >>>
 ```
 
+### Running virtualenv on itm-gpaolo-w10
+
+Use command `py -m venv <DIRECTORY>` - example
+
+```
+D:
+cd \data\github\gmacario\learning-python
+py -m venv lpenv
+lpenv\Scripts\activate.bat
+```
+
+Result:
+
+```
+C:\Users\gmacario>D:
+
+D:\>cd \data\github\gmacario\learning-python
+
+D:\data\github\gmacario\learning-python>py -m venv .lpenv
+
+D:\data\github\gmacario\learning-python>.lpenv\Scripts\activate.bat
+(.lpenv) D:\data\github\gmacario\learning-python>
+```
+
+**NOTE**: You should add file `.gitignore` to avoid checking in the files created by virtualenv
+
+Within the `(.lpenv)` prompt you may now directly invoke `python`, `pip`, etc.
+
+```
+pip list
+pip install virtualenv
+python lpbook/ch1/bike.py
+```
+
+To terminate the virtualenv type the following command
+
+```
+deactivate.bat
+```
+
+
 <!-- TODO -->
 
 <!-- EOF -->
