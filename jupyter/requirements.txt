@@ -1,8 +1,13 @@
+Babel==2.5.1
 bleach==2.1.2
 colorama==0.3.9
+cycler==0.10.0
 decorator==4.1.2
+Delorean==0.6.0
 entrypoints==0.2.3
+Faker==0.8.7
 html5lib==1.0.1
+humanize==0.5.1
 ipykernel==4.7.0
 ipython==6.2.1
 ipython-genutils==0.2.0
@@ -15,6 +20,7 @@ jupyter-client==5.1.0
 jupyter-console==5.2.0
 jupyter-core==4.4.0
 MarkupSafe==1.0
+matplotlib==2.1.1
 mistune==0.8.3
 nbconvert==5.3.1
 nbformat==4.4.0
@@ -26,6 +32,7 @@ parso==0.1.0
 pickleshare==0.7.4
 prompt-toolkit==1.0.15
 Pygments==2.2.0
+pyparsing==2.2.0
 python-dateutil==2.6.1
 pytz==2017.3
 pyzmq==16.0.3
@@ -33,8 +40,10 @@ qtconsole==4.3.1
 simplegeneric==0.8.1
 six==1.11.0
 testpath==0.3.1
+text-unidecode==1.1
 tornado==4.5.2
 traitlets==4.3.2
+tzlocal==1.5.1
 wcwidth==0.1.7
 webencodings==0.5.1
 widgetsnbextension==3.0.8
