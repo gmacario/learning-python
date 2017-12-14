@@ -10,7 +10,7 @@ py -m venv .lpenv
 
 pip install jupyter
 pip install Faker numpy pandas delorean matplotlib
-pip freeze >jupyter\requirements.txt
+pip freeze >requirements.txt
 
 jupyter notebook
 ```
