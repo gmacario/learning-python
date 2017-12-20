@@ -10,6 +10,7 @@ py -m venv .lpenv
 
 pip install jupyter
 pip install Faker numpy pandas delorean matplotlib
+pip install openpyxl
 pip freeze >requirements.txt
 
 jupyter notebook
