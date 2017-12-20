@@ -1,5 +1,8 @@
 # learning-python/.gitignore
 
+# VIM swapfile
+.*.swp
+
 # See https://github.com/github/gitignore/blob/master/Python.gitignore
 
 # Byte-compiled / optimized / DLL files
