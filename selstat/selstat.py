@@ -25,8 +25,44 @@ stats_misra_rules = [
 ]
 """
 
+stats_misra_rules = {}
+
+def dump_rulestats(s):
+    print('DEBUG; dump_rulestats(s=%s)' % s)
+    for key in s:
+        print('DEBUG: dump_rulestats: key %s ==> val %s' % (key, s[key]))
+    return None
+
+def inc_rulestats(s, rulenum, is_error, is_warning, is_info, is_note):
+    print('DEBUG: inc_rulestats: s=%s' % s)
+    oldval = s.get(rulenum, {
+        'rulenum': rulenum,
+        'n_line': 0,
+        'n_error': 0,
+        'n_warning': 0,
+        'n_info': 0,
+        'n_note': 0
+    })
+    print('DEBUG: inc_rulestats: oldval=%s' % oldval)
+    newval = {
+        'rulenum':   rulenum,
+        'n_line':    oldval['n_line'] + 1,
+        'n_error':   oldval['n_error'] + is_error,
+        'n_warning': oldval['n_warning'] + is_warning,
+        'n_info':    oldval['n_info'] + is_info,
+        'n_note':    oldval['n_note'] + is_note
+    }
+    print('DEBUG: inc_rulestats: newval=%s' % newval)
+    s[rulenum] = newval
+    # dump_rulestats(s)
+    return None
+
 def handle_line(line):
-    print('TODO: handle_line: line=%s' % line)
+    print('DEBUG: handle_line: line=%s' % line)
+    is_error   = (re.search(r' Error \d+\:',   line) != None)
+    is_warning = (re.search(r' Warning \d+\:', line) != None)
+    is_info    = (re.search(r' Info \d+\:',    line) != None)
+    is_note    = (re.search(r' Note \d+\:',    line) != None)
     # Handle case of multiple MISRA violations for the same line
     pos = 0;
     while pos < len(line):
@@ -35,9 +71,10 @@ def handle_line(line):
         if searchObj == None:
             break;
         misra_rulenum = searchObj.group(1)
-        # TODO: Update stats_misra_rules
+        print('TODO: Update stats_misra_rules: rulenum=%s, is_error=%d, is_warning=%d, is_info=%d, is_note=%d' % (misra_rulenum, is_error, is_warning, is_info, is_note))
+        inc_rulestats(stats_misra_rules, misra_rulenum, is_error, is_warning, is_info, is_note)
         pos = pos + searchObj.end()
-        print('DEBUG: misra_rulenum=%s, new_pos=%d' % (misra_rulenum, pos))
+        # print('DEBUG: misra_rulenum=%s, new_pos=%d' % (misra_rulenum, pos))
     return None
 
 def compute_statistics(report_path, module_name):
