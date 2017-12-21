@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 #
 # Purpose: TODO
+#
 # Recursively crawl flexelint_outdir and read all "*.out" files
 # Then compute how many lines contain "Error", "Warning", "Info", "Note"
-# When finished, dump the result in a JSON structure
+# and collect statistics broken out by MISRA Rule#
+# When finished, dump the result to a JSON structure
 
 import os
+import re
 
 # print("Hello, world!")
 
@@ -13,8 +16,41 @@ import os
 flexelint_outdir = "/home/gmacario/tmp/linux-4.4.50-min-lint"
 linux_sourcedir = "/home/gmacario/minimized-tree-v4.4.50-bradocaj"
 
+
+# Data structure to collect statistics for each MISRA Rule
+
+"""
+stats_misra_rules = [
+    {'id': '3.1', 'n_line': 198, 'n_error': 10, 'n_warning': 30, 'n_info': 100, 'n_note': 50},
+]
+"""
+
+def handle_line(line):
+    print('TODO: handle_line: line=%s' % line)
+    # Handle case of multiple MISRA violations for the same line
+    pos = 0;
+    while pos < len(line):
+        searchObj = re.search(r'\[MISRA 2012 Rule (\d+\.\d+)[^\]]*\]', line[pos:], re.M)
+        # print('DEBUG: handle_line: searchObj=%s' % searchObj)
+        if searchObj == None:
+            break;
+        misra_rulenum = searchObj.group(1)
+        # TODO: Update stats_misra_rules
+        pos = pos + searchObj.end()
+        print('DEBUG: misra_rulenum=%s, new_pos=%d' % (misra_rulenum, pos))
+    return None
+
 def compute_statistics(report_path, module_name):
-    print('DEBUG: compute_statistics(report_path=%s, module_name=%s)' % (report_path, module_name))
+    # print('DEBUG: compute_statistics(report_path=%s, module_name=%s)' % (report_path, module_name))
+    with open(report_path, errors='replace') as f:
+        # print('DEBUG: compute_statistics: f=%s' % f)
+        i = 0;
+        for line in f:
+            i = i + 1
+            for i, line in enumerate(f):
+                # print('DEBUG: i=%d, line=%s' % (i, line))
+                if line.find('MISRA 2012') != -1:
+                    handle_line(line)
     # TODO
     return None
 
@@ -26,13 +62,13 @@ def traverse_tree(rootdir):
     """
     print('DEBUG: traverse_tree(rootdir=%s)' % rootdir)
     for dirpath, dirnames, filenames in os.walk(rootdir):
-        print('DEBUG: Found directory: %s' % dirpath)
+        # print('DEBUG: Found directory: %s' % dirpath)
         for fname in filenames:
-            print('DEBUG: Found file: \t%s' % fname)
+            # print('DEBUG: Found file: \t%s' % fname)
             if fname.endswith('.out'):
                 report_path = dirpath + '/' + fname
                 module_name = '.' + dirpath[len(rootdir):] + '/' + fname[0:len(fname)-4]
-                print('TODO: compute_statistics(%s, %s)' % (report_path, module_name))
+                # print('TODO: compute_statistics(%s, %s)' % (report_path, module_name))
                 compute_statistics(report_path, module_name)
 
 def main():
