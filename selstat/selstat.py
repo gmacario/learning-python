@@ -7,6 +7,7 @@
 # and collect statistics broken out by MISRA Rule#
 # When finished, dump the result to a JSON structure
 
+import json
 import os
 import re
 
@@ -20,21 +21,24 @@ linux_sourcedir = "/home/gmacario/minimized-tree-v4.4.50-bradocaj"
 # Data structure to collect statistics for each MISRA Rule
 
 """
-stats_misra_rules = [
-    {'id': '3.1', 'n_line': 198, 'n_error': 10, 'n_warning': 30, 'n_info': 100, 'n_note': 50},
-]
+stats_misra_rules = {
+    "3.1": {'rulenum': '3.1', 'n_line': 198, 'n_error': 10, 'n_warning': 30, 'n_info': 100, 'n_note': 50},
+    "5.1": {'rulenum': '5.1', 'n_line': 102, 'n_error': 10, 'n_warning': 60, 'n_info': 10, 'n_note': 5},
+    ...
+}
 """
 
 stats_misra_rules = {}
 
 def dump_rulestats(s):
-    print('DEBUG; dump_rulestats(s=%s)' % s)
-    for key in s:
-        print('DEBUG: dump_rulestats: key %s ==> val %s' % (key, s[key]))
+    print('DEBUG: dump_rulestats(s=%s)' % s)
+    # for key in s:
+    #     print('DEBUG: dump_rulestats: key %s ==> val %s' % (key, s[key]))
+    print(json.dumps(s, sort_keys=True, indent=4))
     return None
 
 def inc_rulestats(s, rulenum, is_error, is_warning, is_info, is_note):
-    print('DEBUG: inc_rulestats: s=%s' % s)
+    # print('DEBUG: inc_rulestats: s=%s' % s)
     oldval = s.get(rulenum, {
         'rulenum': rulenum,
         'n_line': 0,
@@ -43,7 +47,7 @@ def inc_rulestats(s, rulenum, is_error, is_warning, is_info, is_note):
         'n_info': 0,
         'n_note': 0
     })
-    print('DEBUG: inc_rulestats: oldval=%s' % oldval)
+    # print('DEBUG: inc_rulestats: oldval=%s' % oldval)
     newval = {
         'rulenum':   rulenum,
         'n_line':    oldval['n_line'] + 1,
@@ -52,13 +56,13 @@ def inc_rulestats(s, rulenum, is_error, is_warning, is_info, is_note):
         'n_info':    oldval['n_info'] + is_info,
         'n_note':    oldval['n_note'] + is_note
     }
-    print('DEBUG: inc_rulestats: newval=%s' % newval)
+    # print('DEBUG: inc_rulestats: newval=%s' % newval)
     s[rulenum] = newval
     # dump_rulestats(s)
     return None
 
 def handle_line(line):
-    print('DEBUG: handle_line: line=%s' % line)
+    # print('DEBUG: handle_line: line=%s' % line)
     is_error   = (re.search(r' Error \d+\:',   line) != None)
     is_warning = (re.search(r' Warning \d+\:', line) != None)
     is_info    = (re.search(r' Info \d+\:',    line) != None)
@@ -71,14 +75,14 @@ def handle_line(line):
         if searchObj == None:
             break;
         misra_rulenum = searchObj.group(1)
-        print('TODO: Update stats_misra_rules: rulenum=%s, is_error=%d, is_warning=%d, is_info=%d, is_note=%d' % (misra_rulenum, is_error, is_warning, is_info, is_note))
+        # print('DEBUG: Calling inc_rulestats: rulenum=%s, is_error=%d, is_warning=%d, is_info=%d, is_note=%d' % (misra_rulenum, is_error, is_warning, is_info, is_note))
         inc_rulestats(stats_misra_rules, misra_rulenum, is_error, is_warning, is_info, is_note)
         pos = pos + searchObj.end()
         # print('DEBUG: misra_rulenum=%s, new_pos=%d' % (misra_rulenum, pos))
     return None
 
 def compute_statistics(report_path, module_name):
-    # print('DEBUG: compute_statistics(report_path=%s, module_name=%s)' % (report_path, module_name))
+    print('DEBUG: compute_statistics(report_path=%s, module_name=%s)' % (report_path, module_name))
     with open(report_path, errors='replace') as f:
         # print('DEBUG: compute_statistics: f=%s' % f)
         i = 0;
@@ -111,6 +115,7 @@ def traverse_tree(rootdir):
 def main():
     # traverse_tree('.')
     traverse_tree(flexelint_outdir)
+    dump_rulestats(stats_misra_rules)
 
 # ---------------------------------
 
