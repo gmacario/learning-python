@@ -7,11 +7,16 @@
 
 import os
 
-print("Hello, world!")
+# print("Hello, world!")
 
 # FIXME: Should parse command line parameters instead
 flexelint_outdir = "/home/gmacario/tmp/linux-4.4.50-min-lint"
 linux_sourcedir = "/home/gmacario/minimized-tree-v4.4.50-bradocaj"
+
+def compute_statistics(report_path, module_name):
+    print('DEBUG: compute_statistics(report_path=%s, module_name=%s)' % (report_path, module_name))
+    # TODO
+    return None
 
 def traverse_tree(rootdir):
     """Traverse a Directory Tree
@@ -19,11 +24,16 @@ def traverse_tree(rootdir):
     * https://docs.python.org/3/library/os.html
     * https://www.pythoncentral.io/how-to-traverse-a-directory-tree-in-python-guide-to-os-walk/
     """
-    print('DEBUG: traverse_tree(rootDir=%s)' % rootdir)
+    print('DEBUG: traverse_tree(rootdir=%s)' % rootdir)
     for dirpath, dirnames, filenames in os.walk(rootdir):
         print('DEBUG: Found directory: %s' % dirpath)
         for fname in filenames:
-            print('\t%s' % fname)
+            print('DEBUG: Found file: \t%s' % fname)
+            if fname.endswith('.out'):
+                report_path = dirpath + '/' + fname
+                module_name = '.' + dirpath[len(rootdir):] + '/' + fname[0:len(fname)-4]
+                print('TODO: compute_statistics(%s, %s)' % (report_path, module_name))
+                compute_statistics(report_path, module_name)
 
 def main():
     # traverse_tree('.')
